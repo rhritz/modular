@@ -1,4 +1,5 @@
-var Module = require('./Module');
+import Module from './Module.js';
+import { inherits } from './utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Buffer(bufferData) {
@@ -46,4 +47,4 @@ Buffer.prototype.descriptor = {
 	outputs: { data: { type: 'event', x:5,  y:0, label: null, onConnect: 'onConnect' } }
 };
 
-module.exports = Buffer;
+export default Buffer;

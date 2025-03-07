@@ -1,8 +1,7 @@
-var Connector = require('../core/Connector');
-var constants = require('./constants');
-var createDiv = require('./domUtils').createDiv;
+import Connector from '../core/Connector.js';
+import * as constants from './constants.js';
+import {createDiv} from './domUtils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Connector.prototype.initGUI = function (module, id, descriptor) {
 	var dom = this._dom = createDiv('connector ' + this.cssClassName, module._dom);
 	if (descriptor.label) createDiv('label connectorLabel', dom).innerText = descriptor.label;
@@ -19,13 +18,13 @@ Connector.prototype.initGUI = function (module, id, descriptor) {
 
 	var t = this;
 	dom.addEventListener('mousedown', function mouseStart(e) {
+		console.log('Connector mousedown');
 		e.stopPropagation();
 		e.preventDefault();
 		window.moduleManager.startConnection(t, e);
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Connector.prototype.setState = function () {
 	this._dom.className = 'connector ' + this.cssClassName + (this._nConnection > 0 ? '-fill' : '');
 };

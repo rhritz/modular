@@ -1,14 +1,13 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Volume() {
 	this.node = audioContext.createGain();
 	Module.call(this);
 }
 inherits(Volume, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Volume.prototype.descriptor = {
 	type: 'Volume',
 	name: 'Volume',
@@ -18,4 +17,4 @@ Volume.prototype.descriptor = {
 	controls: { volume: { type: 'knob', x: 1.5, y: 0.5, min: 0.0, max: 1.0, endPoint: 'node.gain', value: 'value', label: 'VOL' } }
 };
 
-module.exports = Volume;
+export default Volume;

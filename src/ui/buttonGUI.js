@@ -1,9 +1,7 @@
-var Button    = require('../core/Button');
-var constants = require('./constants');
-var domUtils  = require('./domUtils');
-var createDiv = domUtils.createDiv;
+import Button from '../core/Button.js';
+import * as constants from './constants.js';
+import {createDiv} from './domUtils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Button.prototype.initGUI = function (module, id, descriptor) {
 	// create dom
 	var dom = this._dom = createDiv('moduleButton', module._dom);
@@ -21,7 +19,6 @@ Button.prototype.initGUI = function (module, id, descriptor) {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Button.prototype.setTitle = function (text) {
 	this._title.innerText = text;
 };

@@ -1,4 +1,4 @@
-var connectors = require('./connectors');
+import * as connectors from './connectors.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Connector Abstract class
@@ -15,14 +15,18 @@ function Connector(module, id, descriptor) {
 	this.initGUI(module, id, descriptor);
 	this.bind(module, id, descriptor);
 }
-module.exports = Connector;
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Connector.prototype.cssClassName = 'connector';
 Connector.prototype.color = '#2da8ff';
 Connector.prototype.type  = 'none';
 Connector.prototype.way   = 'input';
-connectors.register(Connector, 'input', 'none');
+// connectors.register(Connector, 'input', 'none');
+
+// TODO Move this to an initialization function
+export function initializeConnector() {
+  connectors.register(Connector, 'input', 'none');
+}
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Connector.prototype.bind = function (module, id, descriptor) {
@@ -58,3 +62,5 @@ Connector.prototype.isCompatible = function (connector) {
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Connector.prototype.initGUI = function (module, id, descriptor) {};
+
+export default Connector;

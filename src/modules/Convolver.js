@@ -1,7 +1,7 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Convolver() {
 	this.node = audioContext.createConvolver();
 	this.bufferData = null;
@@ -30,7 +30,6 @@ Convolver.prototype.setBuffer = function (event) {
 	this.node.buffer = buffer;
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Convolver.prototype.descriptor = {
 	type: 'Convolver',
 	name: 'Convolver',
@@ -43,4 +42,4 @@ Convolver.prototype.descriptor = {
 	controls: {}
 };
 
-module.exports = Convolver;
+export default Convolver;

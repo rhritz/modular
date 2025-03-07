@@ -1,14 +1,16 @@
-var domUtils    = require('./domUtils');
-var createDiv   = domUtils.createDiv;
-var createDom   = domUtils.createDom;
-var removeDom   = domUtils.removeDom;
-var audioEditor = require('./audioEditor');
-var constants   = require('./constants');
-var Module      = require('../core/Module');
-var Buffer      = require('../core/Buffer');
-var synthEditor = require('./synthEditor');
+import { inherits } from '../core/utils.js';
+import {createDom, createDiv, makeButton, removeDom} from './domUtils.js';
+import audioEditor from './audioEditor.js';
+import * as constants from './constants.js';
+import Module from '../core/Module.js';
+import Buffer from '../core/Buffer.js';
+import * as synthEditor from './synthEditor/index.js';
+// var audioEditor = require('./audioEditor');
+// var constants   = require('./constants');
+// var Module      = require('../core/Module');
+// var Buffer      = require('../core/Buffer');
+// var synthEditor = require('./synthEditor');
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.initGUI = function () {
 	var dom = createDiv('module x' + this.descriptor.size, null);
 	this._title = createDom('span', '', dom);
@@ -24,7 +26,6 @@ Module.prototype.initGUI = function () {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Buffer.prototype.initGUI = function () {
 	Module.prototype.initGUI.call(this);
 
@@ -47,37 +48,30 @@ Buffer.prototype.initGUI = function () {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.setTitle = function (title) {
 	this._title.textContent = title;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.setColor = function (color) {
 	this._dom.style.backgroundColor = color;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.setBorder = function (color) {
 	this._dom.style.borderColor = color;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.addClassName = function (className) {
 	this._dom.className += ' ' + className;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.select = function () {
 	this._title.className = 'selected';
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.deselect = function () {
 	this._title.className = '';
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Set module position in UI surface */
 Module.prototype.setPosition = function (x, y) {
 	this.x = x;
@@ -90,7 +84,6 @@ Module.prototype.setPosition = function (x, y) {
 	for (var id in this.cables) this.cables[id].update();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Remove module */
 Module.prototype.remove = function () {
 	// disconnect all connectors

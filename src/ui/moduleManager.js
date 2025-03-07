@@ -1,39 +1,31 @@
-var Cable         = require('../core/Cable');
-var Patch         = require('../core/Patch');
-var constants     = require('./constants');
-var connectorMenu = require('./connectorMenu');
-var ctx           = require('./overlay').ctx;
-var overCtx       = require('./overlay').overCtx;
-var domUtils      = require('./domUtils');
-var createDiv     = domUtils.createDiv;
-var removeDom     = domUtils.removeDom;
-
+import { inherits } from '../core/utils.js';
+import Cable from '../core/Cable.js';
+import Patch from '../core/Patch.js';
+import {ctx, overCtx} from './overlay.js';
+import {createDiv, createDom, removeDom} from './domUtils.js';
+import * as constants from './constants.js';
+import connectorMenu from './connectorMenu.js';
 
 var JACK_CONNECT_CURSOR = 'url(../img/jack-connect.png) 3 3, auto';
 var JACK_FREE_CURSOR    = 'url(../img/jack-free.png) 2 3, auto';
 
-
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function ModuleManager() {
 	this.patch = new Patch();
 	this.selectedModules = [];
 	this.registerKeyEvents();
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 // addModule
 ModuleManager.prototype.addModule = function (module, id) {
 	return this.patch.addModule(module, id);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 // removeCable
 ModuleManager.prototype.removeCable = function (cable) {
 	this.patch.removeCable(cable);
 	this.drawCables();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 // clearPatch
 ModuleManager.prototype.clearPatch = function () {
 	// deselect modules
@@ -44,20 +36,17 @@ ModuleManager.prototype.clearPatch = function () {
 	this.drawCables();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 // getPatch
 ModuleManager.prototype.getPatch = function () {
 	return this.patch.getPatch();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 // setPatch
 ModuleManager.prototype.setPatch = function (patchData) {
 	this.patch.setPatch(patchData);
 	this.drawCables();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 // register Key Events
 ModuleManager.prototype.registerKeyEvents = function () {
 	var t = this;
@@ -90,15 +79,6 @@ ModuleManager.prototype.registerKeyEvents = function () {
 	// document.addEventListener('keyup',   keyRelease, false);
 };
 
-//███████████████████████████████████████████████████████
-//███████████████▄░▄█▄░▄███████▄▄░▄▄█████████████████████
-//████████████████░███░██████████░███████████████████████
-//████████████████░███░██████████░███████████████████████
-//████████████████▄▀▀▀▄███░░███▀▀░▀▀██░░█████████████████
-//███████████████████████████████████████████████████████
-
-
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ModuleManager.prototype.deleteSelectedModules = function () {
 	var modules = this.selectedModules;
 	for (var i = 0; i < modules.length; i++) {
@@ -108,7 +88,6 @@ ModuleManager.prototype.deleteSelectedModules = function () {
 	this.drawCables();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ModuleManager.prototype.startDrag = function (module, e) {
 	var t = this;
 	var d = document;
@@ -190,7 +169,6 @@ ModuleManager.prototype.startDrag = function (module, e) {
 	d.addEventListener('mouseup', dragEnd, false);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ModuleManager.prototype.startConnection = function (sourceConnector, e) {
 	var t = this;
 	var d = document;
@@ -201,7 +179,7 @@ ModuleManager.prototype.startConnection = function (sourceConnector, e) {
 	var startX = sourceConnector.module.x * constants.MODULE_WIDTH  + sourceConnector.x * constants.CONNECTOR_GRID_SIZE + 8;
 	var startY = sourceConnector.module.y * constants.MODULE_HEIGHT + sourceConnector.y * constants.CONNECTOR_GRID_SIZE + 8;
 
-	drag = false;
+	var drag = false;
 
 	function move(e) {
 		var x = e.clientX;
@@ -262,21 +240,18 @@ ModuleManager.prototype.startConnection = function (sourceConnector, e) {
 	d.addEventListener('mouseup', moveEnd, false);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ModuleManager.prototype.showDisconnectMenu = function (x, y, connector) {
 	var cables = this.patch.findCables(connector);
 	if (cables.length === 0) return;
 	connectorMenu.show(x, y, connector, cables);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ModuleManager.prototype.drawCables = function () {
 	var cables = this.patch.cables;
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	for (var id in cables) cables[id].draw();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ModuleManager.prototype.shakeCables = function () {
 	var cables = this.patch.cables;
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -286,7 +261,6 @@ ModuleManager.prototype.shakeCables = function () {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 var moduleManager = new ModuleManager();
-module.exports = moduleManager;
+export default moduleManager;
 window.moduleManager = moduleManager;

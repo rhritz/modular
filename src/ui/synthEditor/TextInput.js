@@ -1,12 +1,7 @@
-var constants    = require('./constants');
-var domUtils     = require('../domUtils');
-var map          = require('../../core/utils').map;
-var createDom    = domUtils.createDom;
-var createDiv    = domUtils.createDiv;
-var makeButton   = domUtils.makeButton;
-var GRID_SIZE    = constants.GRID_SIZE;
+import {createDom, createDiv, makeButton, removeDom} from '../domUtils.js';
+import {GRID_SIZE}  from './constants.js';
+import {map} from '../../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function TextInput(parent) {
 	this.editor      = parent; // TODO: should we allow parent to be any else than editor?
 	this.dom         = createDom('input', 'synthEdit-textInput', parent.dom);
@@ -17,9 +12,7 @@ function TextInput(parent) {
 	this.dom.type = 'text';
 	this._initMouseEvents();
 }
-module.exports = TextInput;
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 TextInput.prototype.bind = function (obj, attribute) {
 	this._obj = obj;
 	this._attribute = attribute;
@@ -28,13 +21,11 @@ TextInput.prototype.bind = function (obj, attribute) {
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 TextInput.prototype.autoUpdate = function () {
 	this._autoUpdate = true;
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 TextInput.prototype.position = function (x, y, w) {
 	this.dom.style.left  = x * GRID_SIZE + 'px';
 	this.dom.style.top   = y * GRID_SIZE + 'px';
@@ -42,7 +33,6 @@ TextInput.prototype.position = function (x, y, w) {
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 TextInput.prototype._initMouseEvents = function () {
 	var self = this;
 	this.dom.addEventListener('change', function (e) {
@@ -54,3 +44,4 @@ TextInput.prototype._initMouseEvents = function () {
 	});
 };
 
+export default TextInput;

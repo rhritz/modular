@@ -1,4 +1,4 @@
-var map = require('./utils').map;
+import { map } from './utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Knob
@@ -75,4 +75,4 @@ Knob.prototype.initGUI = function (module, id, descriptor) {};
 Knob.prototype.updateGUI = function () {};
 Knob.prototype.displayValue = function (value) {};
 
-module.exports = Knob;
+export default Knob;

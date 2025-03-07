@@ -1,17 +1,20 @@
-var Panel        = require('../Panel');
-var domUtils     = require('../domUtils');
-var createDom    = domUtils.createDom;
-var createDiv    = domUtils.createDiv;
-var makeButton   = domUtils.makeButton;
-var removeDom    = domUtils.removeDom;
-var GRID_SIZE    = require('./constants').GRID_SIZE;
-var Container    = require('./Container');
-var Knob         = require('./Knob');
-var TextInput    = require('./TextInput');
-var Label        = require('./Label');
-var audioEditor  = require('../audioEditor');
+import { inherits } from '../../core/utils.js';
+// import Fade from './Fade.js';
+// var Panel        = require('../Panel');
+import Panel from '../Panel.js';
+// var domUtils     = require('../domUtils');
+import {createDom, createDiv, makeButton, removeDom} from '../domUtils.js';
+// var createDom    = domUtils.createDom;
+// var createDiv    = domUtils.createDiv;
+// var makeButton   = domUtils.makeButton;
+// var removeDom    = domUtils.removeDom;
+import {GRID_SIZE}  from './constants.js';
+import Container    from './Container.js';
+import Knob         from './Knob.js';
+import TextInput    from './TextInput.js';
+import Label        from './Label.js';
+import audioEditor  from '../audioEditor.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function SynthEditorPanel() {
 	Panel.call(this);
 	var header = createDiv('synthEdit-header', this._dom);
@@ -42,7 +45,6 @@ function SynthEditorPanel() {
 
 	this.synthName = createDiv('synthedit-header-synthName', header);
 
-
 	// TODO: menu
 	// - synth name
 	// - play/generate
@@ -55,9 +57,7 @@ function SynthEditorPanel() {
 	this.close();
 }
 inherits(SynthEditorPanel, Panel);
-module.exports = SynthEditorPanel;
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SynthEditorPanel.prototype.init = function (synthId, bufferData) {
 	this.synthName.innerText = synthId;
 	this.dom.innerHTML = '';
@@ -72,7 +72,6 @@ SynthEditorPanel.prototype.init = function (synthId, bufferData) {
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SynthEditorPanel.prototype.updateBuffer = function () {
 	var bufferData = this.bufferData;
 
@@ -88,34 +87,31 @@ SynthEditorPanel.prototype.toggleLoop = function () {
 	this.loopBtn.style.backgroundImage = loop ? 'url(../img/iconLoop.png)' : 'url(../img/iconShot.png)';
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SynthEditorPanel.prototype.resize = function (w, h) {
 	this.dom.style.width  = w * GRID_SIZE + 'px';
 	this.dom.style.height = h * GRID_SIZE + 'px';
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SynthEditorPanel.prototype.addContainer = function (x, y, w, h) {
 	var container = new Container(this).rect(x, y, w, h);
 	// TODO: keep reference
 	return container;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SynthEditorPanel.prototype.addKnob = function (x, y) {
 	var knob = new Knob(this).position(x, y);
 	return knob;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SynthEditorPanel.prototype.addTextInput = function (x, y, w) {
 	var input = new TextInput(this).position(x, y, w);
 	return input;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SynthEditorPanel.prototype.addLabel = function (x, y, w, text) {
 	var label = new Label(this).position(x, y, w).text(text);
 	return label;
 };
+
+export default SynthEditorPanel;

@@ -1,5 +1,5 @@
-var resetCanvas   = require('./overlay').reset;
-var moduleManager = require('./moduleManager');
+import {resetCanvas} from './overlay.js';
+import moduleManager from './moduleManager.js';
 
 var timeout = null;
 

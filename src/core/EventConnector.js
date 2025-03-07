@@ -1,20 +1,22 @@
-var connectors = require('./connectors');
-var Connector  = require('./Connector');
+// var connectors = require('./connectors');
+// var Connector  = require('./Connector');
+
+import * as connectors from './connectors.js';
+import Connector from './Connector.js';
+import { inherits } from './utils.js';
 
 var EVENT_CABLE_COLOR = '#2da8ff';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function getEndPoint(module, endPointDescriptor) {
 	endPointDescriptor = endPointDescriptor || '';
 	endPointDescriptor = endPointDescriptor.split('.');
-	endPoint = module;
+	var endPoint = module;
 	for (var i = 0; i < endPointDescriptor.length; i++) {
 		endPoint = endPoint[endPointDescriptor[i]];
 	}
 	return endPoint
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function EventInput(module, id, descriptor) {
 	// this.module = module;
 	Connector.call(this, module, id, descriptor);
@@ -26,7 +28,11 @@ EventInput.prototype.cssClassName = 'eventIn';
 EventInput.prototype.color = EVENT_CABLE_COLOR;
 EventInput.prototype.type  = 'event';
 EventInput.prototype.way   = 'input';
-connectors.register(EventInput, 'input', 'event');
+
+// TODO Move this to an initialization function
+export function initializeEventInput() {
+  connectors.register(EventInput, 'input', 'event');
+}
 
 EventInput.prototype.bind = function (module, id, descriptor) {
 	// An event input endPoint is a reference to a function of the module 
@@ -44,7 +50,6 @@ EventInput.prototype.disconnect = function (connector) {
 	if (this.onDisconnect) this.onDisconnect.call(this.module, connector);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function EventOutput(module, id, descriptor) {
 	Connector.call(this, module, id, descriptor);
 	// event output endPoints is an array of EventInput connector references.
@@ -57,7 +62,11 @@ EventOutput.prototype.cssClassName = 'eventOut';
 EventOutput.prototype.color = EVENT_CABLE_COLOR;
 EventOutput.prototype.type  = 'event';
 EventOutput.prototype.way   = 'output';
-connectors.register(EventOutput, 'output', 'event');
+
+// TODO Move this to an initialization function
+export function initializeEventOutput() {
+  connectors.register(EventOutput, 'output', 'event');
+}
 
 EventOutput.prototype.connect = function (connector) {
 	Connector.prototype.connect.call(this, connector);

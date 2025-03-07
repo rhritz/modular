@@ -1,7 +1,7 @@
-var connectors = require('./connectors');
-var Connector  = require('./Connector');
+import * as connectors from './connectors.js';
+import Connector from './Connector.js';
+import { inherits } from './utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function ParamConnector(module, id, descriptor) {
 	this.connections = [];
 	Connector.call(this, module, id, descriptor);
@@ -35,7 +35,6 @@ ParamConnector.prototype._removeConnection = function (connector) {
 	this.connections.splice(index, 1);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function ParamInput(module, id, descriptor) {
 	this.endPoint = module; // redefined at bind
 	this.min = descriptor.min === undefined ? 0 : descriptor.min;
@@ -45,7 +44,11 @@ function ParamInput(module, id, descriptor) {
 inherits(ParamInput, ParamConnector);
 ParamInput.prototype.cssClassName = 'paramIn';
 ParamInput.prototype.way = 'input';
-connectors.register(ParamInput, 'input', 'param');
+
+// TODO Move this to an initialization function
+export function initializeParamInput() {
+  connectors.register(ParamInput, 'input', 'param');
+}
 
 ParamInput.prototype.bind = function (module, id, descriptor) {
 	// find endPoint reference
@@ -77,15 +80,17 @@ ParamInput.prototype.connect = function (connector) {
 	}
 };
 
-
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function ParamOutput(module, id, descriptor) {
 	ParamConnector.call(this, module, id, descriptor);
 }
 inherits(ParamOutput, ParamConnector);
 ParamOutput.prototype.cssClassName = 'paramOut';
 ParamOutput.prototype.way = 'output';
-connectors.register(ParamOutput, 'output', 'param');
+
+// TODO Move this to an initialization function
+export function initializeParamOutput() {
+  connectors.register(ParamOutput, 'output', 'param');
+}
 
 ParamOutput.prototype.setAutomation = function (func) {
 	var connections = this.connections;

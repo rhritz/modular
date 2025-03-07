@@ -12,19 +12,24 @@
  * to be consistent with Buffer API that needs to load audio.
  */
 
-var synthEditor = require('../ui/synthEditor');
+// var synthEditor = require('../ui/synthEditor');
 
-var SYNTHESIZERS = {
-	'noize': require('./noize'),
-	'hats':  require('./hats'),
-	'disco': require('./disco'),
+import * as synthEditor from '../ui/synthEditor/index.js';
+import * as noize from './noize/index.js';
+import * as hats from './hats/index.js';
+import * as disco from './disco/index.js';
+
+export const SYNTHESIZERS = {
+	'noize': noize,
+	'hats':  hats,
+	'disco': disco,
 };
 
-exports.getSynth = function (id) {
+export function getSynth(id) {
 	return SYNTHESIZERS[id];
 };
 
-exports.addSynth = function (id, synth, editor) {
+export function addSynth(id, synth, editor) {
 	SYNTHESIZERS[id] = synth;
 	if (editor) synthEditor.register(id, editor);
 };

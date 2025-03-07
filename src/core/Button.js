@@ -1,4 +1,3 @@
-
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Button
  *
@@ -34,4 +33,4 @@ Button.prototype.bind = function (module, id, descriptor) {
 	this.endPoint = this.caller[funcName];
 };
 
-module.exports = Button;
+export default Button;

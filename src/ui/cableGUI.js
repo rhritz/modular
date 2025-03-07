@@ -1,8 +1,7 @@
-var Cable     = require('../core/Cable');
-var constants = require('./constants');
-var ctx       = require('./overlay').ctx;
+import Cable from '../core/Cable.js';
+import * as constants from './constants.js';
+import {ctx} from './overlay.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Cable.prototype.draw = function () {
 	ctx.strokeStyle = this.color;
 	ctx.beginPath();
@@ -11,7 +10,6 @@ Cable.prototype.draw = function () {
 	ctx.stroke();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Cable.prototype.update = function () {
 	this.x = this.endPointA.module.x * constants.MODULE_WIDTH  + this.endPointA.x * constants.CONNECTOR_GRID_SIZE + 8;
 	this.y = this.endPointA.module.y * constants.MODULE_HEIGHT + this.endPointA.y * constants.CONNECTOR_GRID_SIZE + 8;

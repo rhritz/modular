@@ -1,6 +1,7 @@
-var loadAudioBuffer = require('../loaders/loadAudioBuffer');
+// var loadAudioBuffer = require('../loaders/loadAudioBuffer');
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+import loadAudioBuffer from '../loaders/loadAudioBuffer.js';
+
 function BufferData(id, data) {
 	this.id     = id;
 	this.buffer = undefined;
@@ -12,15 +13,11 @@ function BufferData(id, data) {
 	this.tag    = data.tag   || [];
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-// static method
-
 BufferData.deserialize = function (data) {
 	// TODO: check for this BufferData existence in the database
 	return new BufferData(data.id, data);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 BufferData.prototype.serialize = function () {
 	return {
 		_type: 'BufferData',
@@ -34,7 +31,6 @@ BufferData.prototype.serialize = function () {
 	};
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 BufferData.prototype.loadAudioBuffer = function (cb) {
 	// check if buffer is already loaded
 	if (this.buffer) return window.setTimeout(cb, 0);
@@ -48,4 +44,4 @@ BufferData.prototype.loadAudioBuffer = function (cb) {
 	});
 };
 
-module.exports = BufferData;
+export default BufferData;

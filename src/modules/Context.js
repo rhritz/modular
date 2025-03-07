@@ -1,7 +1,7 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Context() {
 	this.node = audioContext;
 	Module.call(this);
@@ -15,4 +15,4 @@ Context.prototype.descriptor = {
 	inputs: { DEST: { type: 'audio', x:3,  y:0, endPoint: 'node.destination', label: 'DEST' } }
 };
 
-module.exports = Context;
+export default Context;

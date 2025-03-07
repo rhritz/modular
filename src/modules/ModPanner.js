@@ -1,14 +1,13 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function ModPanner() {
 	this.node = audioContext.createStereoPanner();
 	Module.call(this);
 }
 inherits(ModPanner, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ModPanner.prototype.descriptor = {
 	type: 'ModPanner',
 	name: 'ModPan',
@@ -20,4 +19,4 @@ ModPanner.prototype.descriptor = {
 	outputs: { OUT: { type: 'audio', x:3.5,  y:1,   endPoint: 'node', label: 'OUT' } }
 };
 
-module.exports = ModPanner;
+export default ModPanner;

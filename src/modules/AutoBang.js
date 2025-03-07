@@ -1,6 +1,6 @@
-var Module = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function AutoBang() {
 	this.data     = null;
 	this.duration = 5;
@@ -12,17 +12,23 @@ function AutoBang() {
 }
 inherits(AutoBang, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AutoBang.prototype.onDataIn = function (data) {
 	this.data = data;
 };
 
 AutoBang.prototype.scheduleNext = function () {
-	var t = this;
+	/* var t = this;
 	this.timeout = window.setTimeout(function () {
-		t.$OUT.emit(this.data);
+		t.$OUT.emit(t.data); // this.data
 		t.scheduleNext();
 	}, this.duration * 1000);
+	*/
+	
+	this.timeout = window.setTimeout(() => {
+        // Arrow functions preserve the "this" value from the surrounding context
+        this.$OUT.emit(this.data);
+        this.scheduleNext();
+    }, this.duration * 1000);
 };
 
 AutoBang.prototype.remove = function () {
@@ -46,4 +52,4 @@ AutoBang.prototype.descriptor = {
 	}
 };
 
-module.exports = AutoBang;
+export default AutoBang;

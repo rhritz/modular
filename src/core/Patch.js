@@ -1,8 +1,7 @@
-var Cable         = require('./Cable');
-var moduleLibrary = require('./modules');
-var dataTypes     = require('../data/dataTypes');
+import Cable from './Cable.js';
+import * as moduleLibrary from '../modules/index.js';
+import * as dataTypes from '../data/dataTypes.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Patch
  *
  * @author Cedric Stoquer
@@ -14,7 +13,6 @@ function Patch() {
 	this.grid     = [[]];
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /* Add a module in the pool
  * @param {Module} module - the module to add
  * @param {string} [id] - module id, provided only when loading a patch
@@ -37,7 +35,6 @@ Patch.prototype.addModule = function (module, id) {
 	return module;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Remove a module
  *
  * @param {Object} module - module to remove
@@ -60,7 +57,6 @@ Patch.prototype.removeModule = function (module) {
 	// this.drawCables();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Patch.prototype.disconnect = function (connector) {
 	var cables = this.findCables(connector);
 	for (var i = 0; i < cables.length; i++) {
@@ -68,7 +64,6 @@ Patch.prototype.disconnect = function (connector) {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Find all the cables that connect to a particular connector */
 Patch.prototype.findCables = function (connector) {
 	var key = connector.module.id + ':' + connector.id;
@@ -80,14 +75,12 @@ Patch.prototype.findCables = function (connector) {
 	return cables;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Patch.prototype.areConnected = function (connectorA, connectorB) {
 	var keyA = connectorA.module.id + ':' + connectorA.id;
 	var keyB = connectorB.module.id + ':' + connectorB.id;
 	return this.cables[keyA + '--' + keyB] || this.cables[keyB + '--' + keyA];
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Patch.prototype.addCable = function (connectorA, connectorB, color) {
 	// check if this cable doesn't exist already
 	if (this.areConnected(connectorA, connectorB)) return;
@@ -97,14 +90,12 @@ Patch.prototype.addCable = function (connectorA, connectorB, color) {
 	this.cables[cable.id] = cable;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Patch.prototype.removeCable = function (cable) {
 	if (!this.cables[cable.id]) return;
 	cable.disconnect();
 	delete this.cables[cable.id];
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Removes everything, modules, cables, etc. and leave a blank patch */
 Patch.prototype.clearPatch = function () {
 	// disconnect everything
@@ -121,7 +112,6 @@ Patch.prototype.clearPatch = function () {
 	this._idCount = 0;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Patch.prototype.getPatch = function () {
 	var patchData = {
 		_type: 'modularPatch',
@@ -141,7 +131,6 @@ Patch.prototype.getPatch = function () {
 	return patchData;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** helper function to create a new instance of a Class with arbitrary arguments */
 function construct(constructor, args) {
     function Module() {
@@ -152,7 +141,6 @@ function construct(constructor, args) {
     return new Module();
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Patch.prototype.setPatch = function (patchData) {
 	if (!patchData || !patchData._type === 'modularPatch') return console.error('Wrong format');
 	this.clearPatch();
@@ -206,7 +194,6 @@ Patch.prototype.setPatch = function (patchData) {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Patch.prototype._addModuleInGrid = function (module, x, y) {
 	// set module position inside grid
 	x = x || 0;
@@ -244,7 +231,6 @@ Patch.prototype._addModuleInGrid = function (module, x, y) {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Move a module to a position (x, y)
  *
  * @param {Object} module - 
@@ -264,5 +250,4 @@ Patch.prototype.moveModule = function (module, x, y) {
 	this._addModuleInGrid(module, x, y);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-module.exports = Patch;
+export default Patch;

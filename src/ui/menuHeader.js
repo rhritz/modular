@@ -1,15 +1,15 @@
-var domUtils    = require('./domUtils');
-var createDiv   = domUtils.createDiv;
-var createDom   = domUtils.createDom;
-var removeDom   = domUtils.removeDom;
-var makeButton  = domUtils.makeButton;
+import {createDom, createDiv, makeButton, removeDom} from './domUtils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+import audioEditor from './audioEditor.js';
+import moduleLibrary from './moduleLibrary.js';
+import bufferLibrary from './bufferLibrary.js';
+import * as synthEditor from './synthEditor/index.js';
+
 var PANELS = {
-	audioEditor:   require('./audioEditor'),
-	moduleLibrary: require('./moduleLibrary'),
-	bufferLibrary: require('./bufferLibrary'),
-	synthEditor:   require('./synthEditor'),
+	audioEditor:   audioEditor,
+	moduleLibrary: moduleLibrary,
+	bufferLibrary: bufferLibrary,
+	synthEditor:   synthEditor,
 };
 
 function openPanel(panel) {
@@ -24,7 +24,6 @@ function closeAllPanels() {
 	}
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function exportPatch() {
 	var patch = window.moduleManager.getPatch();
 
@@ -46,10 +45,11 @@ function openPatch(patchData) {
 	}
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 // read patches folder and populate the "Patches" menu
 
-var patchList = assets.patches || {};
+// TODO
+var assets = {};
+var patchList = assets?.patches || {};
 var patchMenu = [];
 
 for (var patchId in patchList) {
@@ -61,7 +61,6 @@ if (patchMenu.length) {
 	patchMenu[0].click();
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 var MENU_TEMPLATE = [
 	{
 		label: 'File',
@@ -98,12 +97,10 @@ var MENU_TEMPLATE = [
 	},
 ];
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 var menuBar = createDiv('menuHeader', null);
 menuBar._currentSubmenu = null;
 var closedAt = 0;
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function closeCurrentSubmenu() {
 	if (!menuBar._currentSubmenu) return;
 	menuBar._currentSubmenu.style.display = 'none';
@@ -111,7 +108,6 @@ function closeCurrentSubmenu() {
 	closedAt = Date.now();
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function addItemInSubmenu(subItem, submenuContainer) {
 	if (subItem.type === 'separator') {
 		createDiv('submenuSeparator', submenuContainer);
@@ -126,7 +122,6 @@ function addItemInSubmenu(subItem, submenuContainer) {
 	});
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function addItemInMenuBar(item) {
 	if (!item.label) return;
 	var itemBtn = createDiv('menuItem', menuBar);
@@ -164,7 +159,6 @@ function addItemInMenuBar(item) {
 	});
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function createMenuFromTemplate(template) {
 	for (var i = 0; i < template.length; i++) {
 		var item = template[i];

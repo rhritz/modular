@@ -1,4 +1,5 @@
-var Module = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function DateBang() {
@@ -91,4 +92,4 @@ DateBang.prototype.descriptor = {
 	}
 };
 
-module.exports = DateBang;
+export default DateBang;

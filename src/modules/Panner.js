@@ -1,14 +1,13 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Panner() {
 	this.node = audioContext.createStereoPanner();
 	Module.call(this);
 }
 inherits(Panner, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Panner.prototype.descriptor = {
 	type: 'Panner',
 	name: 'Pan',
@@ -18,4 +17,4 @@ Panner.prototype.descriptor = {
 	controls: { pan: { type: 'knob',  x: 1.5, y: 0, min: -1, max: 1, endPoint: 'node.pan', value: 'value' } }
 };
 
-module.exports = Panner;
+export default Panner;

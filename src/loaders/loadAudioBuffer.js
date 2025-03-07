@@ -1,6 +1,7 @@
-var audioContext = require('../core/audioContext');
+// var audioContext = require('../core/audioContext');
+import audioContext from '../core/audioContext.js';
 
-module.exports = function (uri, cb) {
+function loadAudioBuffer(uri, cb) {
 	var xobj = new XMLHttpRequest();
 	xobj.responseType = 'arraybuffer';
 
@@ -17,3 +18,5 @@ module.exports = function (uri, cb) {
 	xobj.open('GET', uri, true);
 	xobj.send();
 };
+
+export default loadAudioBuffer;

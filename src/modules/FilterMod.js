@@ -1,5 +1,6 @@
-var audioContext = require('../core/audioContext');
-var Filter       = require('./Filter');
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
+import Filter from './Filter.js';
 
 var FILTER_TYPE_ENUM = [
 	{ id: 'lowpass',  caption: 'LP' },
@@ -37,4 +38,4 @@ FilterMod.prototype.descriptor = {
 	persistent: ['filterType']
 };
 
-module.exports = FilterMod;
+export default FilterMod;

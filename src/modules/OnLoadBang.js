@@ -1,4 +1,5 @@
-var Module = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function OnLoadBang() {
@@ -26,4 +27,4 @@ OnLoadBang.prototype.descriptor = {
 	controls: {}
 };
 
-module.exports = OnLoadBang;
+export default OnLoadBang;

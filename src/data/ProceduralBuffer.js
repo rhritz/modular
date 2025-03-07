@@ -1,4 +1,6 @@
-var synthesizers = require('../synthesizers');
+// var synthesizers = require('../synthesizers');
+
+import {getSynth} from '../synthesizers/index.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function ProceduralBuffer(id, data) {
@@ -50,7 +52,7 @@ ProceduralBuffer.prototype.loadAudioBuffer = function (cb) {
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ProceduralBuffer.prototype.generateBuffer = function (cb) {
 	// get proper synthesizer
-	var synth = synthesizers.getSynth(this.synthesizer);
+	var synth = getSynth(this.synthesizer);
 	if (!synth) {
 		// defer callback
 		window.setTimeout(function () {
@@ -62,4 +64,4 @@ ProceduralBuffer.prototype.generateBuffer = function (cb) {
 	synth.generate(this, cb);
 };
 
-module.exports = ProceduralBuffer;
+export default ProceduralBuffer;

@@ -1,9 +1,8 @@
-var audioContext    = require('../../core/audioContext');
-var loadAudioBuffer = require('../../loaders/loadAudioBuffer');
+import audioContext from '../../core/audioContext.js';
+import loadAudioBuffer from '../../loaders/loadAudioBuffer.js';
 
 var EPSILON = 0.0001;
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Voice(sample) {
 	this.sample  = sample;
 	this.head    = 0; // position of reading head in the sample
@@ -38,8 +37,8 @@ Voice.prototype.play = function () {
 	return sample;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.generate = function (bufferData, cb) {
+
+export function generate(bufferData, cb) {
 
 	// get sound informations
 	var params    = bufferData.params;

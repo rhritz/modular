@@ -1,14 +1,13 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Gain() {
 	this.node = audioContext.createGain();
 	Module.call(this);
 }
 inherits(Gain, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Gain.prototype.descriptor = {
 	type: 'Gain',
 	name: 'Gain x100',
@@ -18,4 +17,4 @@ Gain.prototype.descriptor = {
 	controls: { gain: { type: 'knob', x: 1.5, y: 0.5, min: 1.0, max: 100.0, endPoint: 'node.gain', value: 'value', label: 'GAIN' } }
 };
 
-module.exports = Gain;
+export default Gain;

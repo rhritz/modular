@@ -1,17 +1,13 @@
-var sendRequest  = require('../loaders/sendRequest');
-var Panel        = require('./Panel');
-var beforeClose  = require('./beforeClose');
-var domUtils     = require('./domUtils');
-var createDom    = domUtils.createDom;
-var createDiv    = domUtils.createDiv;
-var makeButton   = domUtils.makeButton;
-var removeDom    = domUtils.removeDom;
-var makeDragable = domUtils.makeDragable;
+import { sendRequest } from '../loaders/sendRequest.js';
+import Panel from './Panel.js';
+import * as beforeClose from './beforeClose.js';
+import {createDom, createDiv, makeButton, removeDom, makeDragable} from './domUtils.js';
+import { inherits } from '../core/utils.js';
 
 var WAVEFORM_WIDTH  = 600;
 var WAVEFORM_HEIGHT = 200;
 var HALF_HEIGHT     = ~~(WAVEFORM_HEIGHT / 2);
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+
 /** AudioEditor
  *
  * @author Cedric Stoquer
@@ -116,7 +112,6 @@ function AudioEditor() {
 }
 inherits(AudioEditor, Panel);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.onScroll = function () {
 	var scroll = this.scroll.scrollLeft;
 
@@ -128,7 +123,6 @@ AudioEditor.prototype.onScroll = function () {
 	this.drawWaveform();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.onWheel = function (e) {
 	var delta = e.deltaY;
 
@@ -153,7 +147,6 @@ AudioEditor.prototype.onWheel = function (e) {
 	this.drawWaveform();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.onClick = function (e) {
 	if (!this.bufferData || !this.bufferData.buffer) return;
 	var x = e.layerX;
@@ -174,14 +167,12 @@ AudioEditor.prototype.onClick = function (e) {
 	this.drawWaveform();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.allowSave = function (value) {
 	this.canSave = value;
 	// update save button display
 	this.saveButton.style.opacity = value ? 1 : 0;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.drawWaveform = function () {
 	var audioData = this.bufferData.buffer.getChannelData(0);
 	var bufferLength = this.bufferData.buffer.length; // length in samples (=audioData.length)
@@ -237,7 +228,6 @@ AudioEditor.prototype.drawWaveform = function () {
 	this.ctx.fillRect(WAVEFORM_WIDTH * end   - offset, 0, 1, WAVEFORM_HEIGHT);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.setBuffer = function (bufferData) {
 	var t = this;
 
@@ -265,7 +255,6 @@ AudioEditor.prototype.setBuffer = function (bufferData) {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.setTags = function (bufferData) {
 	this.tags.innerHTML = '';
 	if (!bufferData.tag) return;
@@ -274,7 +263,6 @@ AudioEditor.prototype.setTags = function (bufferData) {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /**
  * @param {string} tag - tag name
  */
@@ -295,7 +283,6 @@ AudioEditor.prototype.addTag = function (tag) {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 AudioEditor.prototype.addNewTag = function (tag) {
 	if (!this.bufferData) return;
 
@@ -310,4 +297,6 @@ AudioEditor.prototype.addNewTag = function (tag) {
 	this.allowSave(true);
 };
 
-module.exports = new AudioEditor();
+const audioEditor = new AudioEditor();
+
+export default audioEditor;

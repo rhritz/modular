@@ -1,5 +1,6 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import audioContext from '../core/audioContext.js';
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function BufferSlice() {
@@ -98,4 +99,4 @@ BufferSlice.prototype.descriptor = {
 	}
 };
 
-module.exports = BufferSlice;
+export default BufferSlice;

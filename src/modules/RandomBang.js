@@ -1,7 +1,6 @@
-var Module = require('../core/Module');
-var map    = require('../core/utils').map;
+import Module from '../core/Module.js';
+import { inherits, map } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function RandomBang() {
 	this.data     = null;
 	this.min      = 5;
@@ -14,7 +13,6 @@ function RandomBang() {
 }
 inherits(RandomBang, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 RandomBang.prototype.onDataIn = function (data) {
 	this.data = data;
 };
@@ -37,7 +35,6 @@ RandomBang.prototype.remove = function () {
 	Module.prototype.remove.call(this);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 RandomBang.prototype.descriptor = {
 	type: 'RandomBang',
 	name: 'RandomBang',
@@ -50,4 +47,4 @@ RandomBang.prototype.descriptor = {
 	}
 };
 
-module.exports = RandomBang;
+export default RandomBang;

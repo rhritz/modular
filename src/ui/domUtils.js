@@ -1,12 +1,10 @@
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** @module domUtils
  *  @desc dom utilities
  *  @author Cedric Stoquer
  */
 var DOCUMENT_BODY = document.getElementsByTagName('body')[0];
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.createDom = function (type, className, parent) {
+export function createDom(type, className, parent) {
 	parent = parent || DOCUMENT_BODY;
 	var dom = document.createElement(type);
 	parent.appendChild(dom);
@@ -14,19 +12,16 @@ exports.createDom = function (type, className, parent) {
 	return dom;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.createDiv = function (className, parent) {
-	return exports.createDom('div', className, parent);
+export function createDiv(className, parent) {
+	return createDom('div', className, parent);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.removeDom = function (dom, parent) {
+export function removeDom(dom, parent) {
 	parent = parent || DOCUMENT_BODY;
 	parent.removeChild(dom);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.makeButton = function (dom, onClic) {
+export function makeButton(dom, onClic) {
 	dom.addEventListener('mousedown', function (e) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -35,11 +30,10 @@ exports.makeButton = function (dom, onClic) {
 	return dom;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function startDrag(dom, e) {
 	var d = document;
 
-	rect = dom.getBoundingClientRect();
+	var rect = dom.getBoundingClientRect();
 
 	var startX = e.clientX - rect.left;
 	var startY = e.clientY - rect.top;
@@ -60,8 +54,7 @@ function startDrag(dom, e) {
 	d.addEventListener('mouseup',   dragEnd,  false);
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.makeDragable = function (handle, target) {
+export function makeDragable(handle, target) {
 	target = target || handle;
 	handle.addEventListener('mousedown', function (e) {
 		e.stopPropagation();

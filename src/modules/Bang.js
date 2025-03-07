@@ -1,4 +1,5 @@
-var Module = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Bang() {
@@ -26,4 +27,4 @@ Bang.prototype.descriptor = {
 	controls: { BTN: { type: 'button', x: 1.8, y: 0.1, endPoint: 'pushButton' } }
 };
 
-module.exports = Bang;
+export default Bang;

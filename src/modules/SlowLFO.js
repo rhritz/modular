@@ -1,8 +1,7 @@
-var LFO = require('./LFO');
-var audioContext = require('../core/audioContext');
+import LFO from './LFO.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function SlowLFO() {
 	LFO.call(this);
 	this.node.frequency.value = 0.005;
@@ -10,7 +9,6 @@ function SlowLFO() {
 }
 inherits(SlowLFO, LFO);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 SlowLFO.prototype.descriptor = {
 	type: 'SlowLFO',
 	name: 'SlowLFO',
@@ -24,4 +22,4 @@ SlowLFO.prototype.descriptor = {
 	persistent: ['waveform']
 };
 
-module.exports = SlowLFO;
+export default SlowLFO;

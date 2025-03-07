@@ -1,4 +1,5 @@
-var Module  = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function TestModule() {
@@ -41,4 +42,4 @@ TestModule.prototype.descriptor = {
 	}
 };
 
-module.exports = TestModule;
+export default TestModule;

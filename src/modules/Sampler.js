@@ -1,7 +1,7 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Sampler() {
 	this.node = audioContext.createBufferSource();
 	this.bufferData = null;
@@ -54,7 +54,6 @@ Sampler.prototype.setBuffer = function (event) {
 	this.node.start();
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Sampler.prototype.descriptor = {
 	type: 'Sampler',
 	name: 'Sampler',
@@ -64,4 +63,4 @@ Sampler.prototype.descriptor = {
 	controls: { rate:   { type: 'knob',  x: 3.7, y: 0.3, min: 0.01, max: 2, endPoint: 'node.playbackRate', value: 'value', label: 'RATE' } }
 };
 
-module.exports = Sampler;
+export default Sampler;

@@ -1,8 +1,7 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
-var map          = require('../core/utils').map;
+import Module from '../core/Module.js';
+import { inherits, map } from '../core/utils.js';
+import audioContext from '../core/audioContext.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Fade() {
 	this.target = 0.5;
 	this.duration = 4;
@@ -10,7 +9,6 @@ function Fade() {
 }
 inherits(Fade, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Fade.prototype.onTrigger = function () {
 	var currentTime = audioContext.currentTime;
 	var target   = this.target;
@@ -24,7 +22,6 @@ Fade.prototype.onTrigger = function () {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Fade.prototype.descriptor = {
 	type: 'Fade',
 	name: 'Fade',
@@ -37,4 +34,4 @@ Fade.prototype.descriptor = {
 	}
 };
 
-module.exports = Fade;
+export default Fade;

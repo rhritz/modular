@@ -1,10 +1,9 @@
-var audioContext = require('../../core/audioContext');
-var copyObject   = require('../../core/utils').copyObject;
+import audioContext from '../../core/audioContext.js';
+import {copyObject} from '../../core/utils.js';
 
 var SAMPLE_RATE = 44100;
 var PI2 = Math.PI * 2;
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Osc() {
 	this.freq = 440;
 	this.t = 0;
@@ -21,7 +20,6 @@ Osc.prototype.tic = function () {
 	return Math.sin(this.t * PI2);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Envelope() {
 	this.duration = 1;
 	this.curve    = 0;
@@ -41,7 +39,6 @@ Envelope.prototype.tic = function() {
 	this.v = Math.pow(1 - this.t / d, this.curve);
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Synth() {
 	// components
 	this.osc = new Osc();
@@ -71,7 +68,6 @@ Synth.prototype.tic = function () {
 
 var synth = new Synth();
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 var DEFAULT_PARAMS = {
 	freq:         440,
 	mod:          300,
@@ -80,8 +76,7 @@ var DEFAULT_PARAMS = {
 	modCurve:     0.5
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.generate = function (bufferData, cb) {
+export function generate(bufferData, cb) {
 	// get sound informations
 	var params = bufferData.params  || copyObject(DEFAULT_PARAMS);
 	var length = params.ampDuration || 1;

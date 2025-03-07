@@ -1,10 +1,10 @@
-var sendRequest = require('../loaders/sendRequest');
+import { sendRequest } from '../loaders/sendRequest.js';
 
 var FLAGS = {
 	audio: false
 };
 
-exports.setFlag = function (id) {
+export function setFlag(id) {
 	FLAGS[id] = true;
 };
 

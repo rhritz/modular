@@ -5,13 +5,13 @@
 /** map a value from an input interval [iMin ~ iMax] to an output interval [oMin ~ oMax] 
  * preconditions: iMin != iMax
  */
-exports.map = function (value, iMin, iMax, oMin, oMax) {
+export function map(value, iMin, iMax, oMin, oMax) {
 	return oMin + (oMax - oMin) * (value - iMin) / (iMax - iMin);
-};
+}
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Make a deep copy of an object */
-// exports.copyObject = function (object) {
+// function copyObject(object) {
 
 // 	function copyObject(source) {
 // 		if (typeof source === 'object') {
@@ -36,8 +36,20 @@ exports.map = function (value, iMin, iMax, oMin, oMax) {
 // 	}
 
 // 	return copyObject(object);
-// };
+// }
 
-exports.copyObject = function (object) {
+export function copyObject(object) {
 	return JSON.parse(JSON.stringify(object));
-};
+}
+
+export function inherits(ctor, superCtor) {
+     ctor.super_ = superCtor;
+     ctor.prototype = Object.create(superCtor.prototype, {
+         constructor: {
+             value: ctor,
+             enumerable: false,
+             writable: true,
+             configurable: true
+         }
+     });
+}

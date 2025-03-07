@@ -5,14 +5,12 @@ function resizeCanvas(canvas) {
 	canvas.style.height = canvas.height + 'px';
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 var canvas  = document.getElementById('cableCanvas');
 var overlay = document.getElementById('overlayCanvas');
-var ctx     = canvas.getContext('2d');
-var overCtx = overlay.getContext('2d');
+const ctx     = canvas.getContext('2d');
+const overCtx = overlay.getContext('2d');
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-function resetCanvas() {
+export function resetCanvas() {
 	resizeCanvas(canvas);
 	resizeCanvas(overlay);
 
@@ -31,7 +29,5 @@ function resetCanvas() {
 
 resetCanvas();
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-exports.ctx     = ctx;
-exports.overCtx = overCtx;
-exports.reset   = resetCanvas;
+export {ctx, overCtx};
+

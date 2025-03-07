@@ -1,13 +1,10 @@
-var Panel         = require('./Panel');
-var moduleManager = require('./moduleManager');
-var BufferModule  = require('../core/Buffer');
-var domUtils      = require('./domUtils');
-var createDiv     = domUtils.createDiv;
-var createDom     = domUtils.createDom;
-var removeDom     = domUtils.removeDom;
-var makeButton    = domUtils.makeButton;
+import Panel from './Panel.js';
+import moduleManager from './moduleManager.js';
+import {createDiv, createDom, makeButton, removeDom} from './domUtils.js';
+import { inherits } from '../core/utils.js';
+import BufferModule from '../core/Buffer2.js'; // alebo Buffer2...
+import {initializeAudioSystem, audioLibrary} from '../loaders/initialization.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** BufferLibrary
  *
  * @author Cedric Stoquer
@@ -60,7 +57,6 @@ function BufferLibrary() {
 }
 inherits(BufferLibrary, Panel);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 BufferLibrary.prototype.addTag = function (tag) {
 	var t = this;
 
@@ -86,7 +82,6 @@ BufferLibrary.prototype.addTag = function (tag) {
 	this.filter();
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 BufferLibrary.prototype.filter = function () {
 	var tagKeys = Object.keys(this.tags);
 
@@ -123,10 +118,10 @@ BufferLibrary.prototype.filter = function () {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 BufferLibrary.prototype.add = function (bufferData) {
 	var button = createDiv('libraryEntry', this.list);
 	button.textContent = bufferData.id;
+	console.log('bufferData', bufferData);
 	button.addEventListener('mousedown', function onClick(e) {
 		var module = moduleManager.addModule(new BufferModule(bufferData));
 		moduleManager.startDrag(module, e);
@@ -135,12 +130,15 @@ BufferLibrary.prototype.add = function (bufferData) {
 	this.bufferDataList.push({ button: button, buffer: bufferData });
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 BufferLibrary.prototype.createEntries = function () {
-	var buffers = window.assets.buffers;
+	// var buffers = window.assets.buffers;
+	var buffers = audioLibrary;
+	console.log('createEntries');
 	for (var id in buffers) {
+		console.log('big buffa:',id );
 		this.add(buffers[id]);
 	}
 };
 
-module.exports = new BufferLibrary();
+const bufferLibrary = new BufferLibrary();
+export default bufferLibrary;

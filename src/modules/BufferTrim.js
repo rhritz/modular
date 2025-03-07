@@ -1,6 +1,8 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
-
+// var audioContext = require('../core/audioContext');
+import audioContext from '../core/audioContext.js';
+// var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function BufferTrim() {
 	this.buffer = null;
@@ -58,4 +60,4 @@ BufferTrim.prototype.descriptor = {
 	controls: {  }
 };
 
-module.exports = BufferTrim;
+export default BufferTrim;

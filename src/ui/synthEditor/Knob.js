@@ -1,17 +1,12 @@
-var constants    = require('./constants');
-var domUtils     = require('../domUtils');
-var map          = require('../../core/utils').map;
-var createDom    = domUtils.createDom;
-var createDiv    = domUtils.createDiv;
-var makeButton   = domUtils.makeButton;
-var removeDom    = domUtils.removeDom;
-var GRID_SIZE    = constants.GRID_SIZE;
+import {createDom, createDiv, makeButton, removeDom} from '../domUtils.js';
+import {GRID_SIZE}  from './constants.js';
+import {map} from '../../core/utils.js';
+
 var PI2          = Math.PI * 2;  // to draw the full circle
 var DISPLAY_MIN  = -Math.PI - 1; // begining of arc angle
 var DISPLAY_MAX  =  1;           // maximum  of arc angle
 var VALUE_AMP    = 68; // amplitude of internal value (how much the mouse has to move)
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function Knob(parent) {
 	this.editor      = parent; // TODO: should we allow parent to be any else than editor?
 	this.dom         = createDiv('synthEdit-knob', parent.dom);
@@ -30,9 +25,7 @@ function Knob(parent) {
 	this._initMouseEvents();
 	this._updateDisplay();
 }
-module.exports = Knob;
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.bind = function (obj, attribute, min, max) {
 	this.min = min;
 	this.max = max;
@@ -44,33 +37,28 @@ Knob.prototype.bind = function (obj, attribute, min, max) {
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.autoUpdate = function () {
 	this._autoUpdate = true;
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.setAsInt = function () {
 	this._integer = true;
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.position = function (x, y) {
 	this.dom.style.left  = x * GRID_SIZE + 'px';
 	this.dom.style.top   = y * GRID_SIZE + 'px';
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.color = function (color) {
 	this._color = constants.getColor(color);
 	this._updateDisplay();
 	return this;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype._initCanvasContext = function () {
 	this.canvas.width  = 32;
 	this.canvas.height = 32;
@@ -79,7 +67,6 @@ Knob.prototype._initCanvasContext = function () {
 	ctx.lineWidth   = 8;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype._initMouseEvents = function () {
 	var self = this;
 	this.dom.addEventListener('mousedown', function mouseStart(e) {
@@ -115,7 +102,6 @@ Knob.prototype._initMouseEvents = function () {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype._setValue = function (value) {
 	this.value = value;
 	this._updateDisplay();
@@ -127,7 +113,6 @@ Knob.prototype._setValue = function (value) {
 	this._obj[this._attribute] = value;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /* value between 0 and 1 */
 Knob.prototype._updateDisplay = function () {
 	var ctx = this.ctx;
@@ -146,3 +131,5 @@ Knob.prototype._updateDisplay = function () {
 
 	return this;
 };
+
+export default Knob;

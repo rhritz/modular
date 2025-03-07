@@ -1,7 +1,8 @@
-var audioContext = require('../core/audioContext');
-var Module       = require('../core/Module');
+import Module from '../core/Module.js';
+import audioContext from '../core/audioContext.js';
+import { inherits } from '../core/utils.js';
 
-WAVEFORM_TYPE_ENUM = [
+const WAVEFORM_TYPE_ENUM = [
 	{ id: 'sine',     caption: 'sin' },
 	{ id: 'square',   caption: 'sqr' },
 	{ id: 'sawtooth', caption: 'saw' },
@@ -9,7 +10,6 @@ WAVEFORM_TYPE_ENUM = [
 	// { id: 'custom',   caption: 'usr' }
 ];
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function LFO() {
 	this._waveType = 0;
 
@@ -23,12 +23,10 @@ function LFO() {
 }
 inherits(LFO, Module);
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 LFO.prototype.switchType = function () {
 	this.waveform += 1;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Object.defineProperty(LFO.prototype, 'waveform', {
 	get: function() {
 		return this._waveType;
@@ -40,7 +38,6 @@ Object.defineProperty(LFO.prototype, 'waveform', {
 	}
 });
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 LFO.prototype.descriptor = {
 	type: 'LFO',
 	name: 'LFO',
@@ -54,4 +51,4 @@ LFO.prototype.descriptor = {
 	persistent: ['waveform']
 };
 
-module.exports = LFO;
+export default LFO;

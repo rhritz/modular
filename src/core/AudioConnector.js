@@ -1,5 +1,6 @@
-var connectors = require('./connectors');
-var Connector  = require('./Connector');
+import * as connectors from './connectors.js';
+import Connector from './Connector.js';
+import { inherits } from './utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function AudioConnector(module, id, descriptor) {
@@ -58,7 +59,11 @@ function AudioInput(module, id, descriptor) {
 inherits(AudioInput, AudioConnector);
 AudioInput.prototype.cssClassName = 'audioIn';
 AudioInput.prototype.way = 'input';
-connectors.register(AudioInput, 'input', 'audio');
+
+// TODO Move this to an initialization function
+export function initializeAudioInput() {
+  connectors.register(AudioInput, 'input', 'audio');
+}
 
 AudioInput.prototype.connect = function (connector) {
 	AudioConnector.prototype.connect.call(this, connector);
@@ -72,7 +77,11 @@ function AudioOutput(module, id, descriptor) {
 inherits(AudioOutput, AudioConnector);
 AudioOutput.prototype.cssClassName = 'audioOut';
 AudioOutput.prototype.way = 'output';
-connectors.register(AudioOutput, 'output', 'audio');
+
+// TODO Move this to an initialization function
+export function initializeAudioOutput() {
+  connectors.register(AudioOutput, 'output', 'audio');
+}
 
 AudioOutput.prototype.connect = function (connector) {
 	AudioConnector.prototype.connect.call(this, connector);
@@ -90,3 +99,5 @@ AudioOutput.prototype.isCompatible = function (connector) {
 	if (connector.type === 'param' && connector.way === 'input') return true;
 	return AudioConnector.prototype.isCompatible.call(this, connector);
 };
+
+export { AudioConnector, AudioInput, AudioOutput };

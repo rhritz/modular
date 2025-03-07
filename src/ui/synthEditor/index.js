@@ -1,21 +1,16 @@
-var SynthEditorPanel = require('./SynthEditorPanel');
-
-var synthEditorPanel = new SynthEditorPanel();
-// module.exports     = synthEditor;
-// window.synthEditor = synthEditor;
-
+import SynthEditorPanel from './SynthEditorPanel.js';
 
 var editorBuilders = {};
 
-exports.register = function (synthId, editorBuilder) {
+export function register(synthId, editorBuilder) {
 	editorBuilders[synthId] = editorBuilder;
 };
 
-exports.hasEditor = function (synthId) {
+export function hasEditor(synthId) {
 	return !!editorBuilders[synthId];
 };
 
-exports.open = function (synthId, bufferData) {
+export function open(synthId, bufferData) {
 	synthEditorPanel.init(synthId, bufferData);
 	var editorBuilder = editorBuilders[synthId];
 	if (!editorBuilder) return console.error('there is no editor for synth "' + synthId + '"');
@@ -31,3 +26,6 @@ exports.open = function (synthId, bufferData) {
 	synthEditorPanel.open();
 	synthEditorPanel.setOnTop();
 };
+
+var synthEditorPanel = new SynthEditorPanel();
+export default synthEditorPanel;

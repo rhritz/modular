@@ -1,6 +1,6 @@
-exports.GRID_SIZE = 16;
+export const GRID_SIZE = 16;
 
-var COLORS = [
+export const COLORS = [
 	{ hi: '#BBB', low: '#444' },
 	{ hi: '#FB0203', low: '#400615' },
 	{ hi: '#07FC0B', low: '#024415' },
@@ -10,10 +10,8 @@ var COLORS = [
 	{ hi: '#61F5E2', low: '#275359' },
 ];
 
-exports.COLORS = COLORS;
+export const colorLength = COLORS.length;
 
-var colorLength = COLORS.length;
-
-exports.getColor = function (color) {
+export function getColor(color) {
 	return COLORS[~~color % colorLength];
 };

@@ -1,4 +1,5 @@
-var Module = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function EventDelay() {
@@ -31,4 +32,4 @@ EventDelay.prototype.descriptor = {
 	controls: { delay: { type: 'knob',  x: 4, y: 0, min: 1, max: 200, int: true, endPoint: null, value: 'delay' } }
 };
 
-module.exports = EventDelay;
+export default EventDelay;

@@ -1,8 +1,5 @@
-var domUtils   = require('./domUtils');
-var createDiv  = domUtils.createDiv;
-var makeButton = domUtils.makeButton;
+import {createDiv, createDom, removeDom, makeButton} from './domUtils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Connector Menu
  *
  * @author Cedric Stoquer
@@ -17,14 +14,12 @@ function ConnectorMenu() {
 	});
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ConnectorMenu.prototype.hide = function () {
 	this.dom.style.display = 'none';
 	this.dom.innerHTML = '';
 	this.selected = null;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ConnectorMenu.prototype.addEntry = function (title) {
 	var dom = createDiv('connectorMenuEntry', this.dom);
 	dom.innerText = title;
@@ -32,7 +27,6 @@ ConnectorMenu.prototype.addEntry = function (title) {
 	return dom;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ConnectorMenu.prototype.addDisconnectEntry = function (cable, title) {
 	var dom = this.addEntry(title);
 	var moduleManager = window.moduleManager; // TODO
@@ -56,7 +50,6 @@ ConnectorMenu.prototype.addDisconnectEntry = function (cable, title) {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 ConnectorMenu.prototype.show = function (x, y, connector, cables) {
 	this.selected = connector;
 
@@ -107,4 +100,5 @@ ConnectorMenu.prototype.show = function (x, y, connector, cables) {
 	}
 };
 
-module.exports = new ConnectorMenu();
+const connectorMenu = new ConnectorMenu();
+export default connectorMenu;

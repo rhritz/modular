@@ -1,4 +1,4 @@
-exports.create = function (editor, params) {
+export function create(editor, params) {
 	editor.resize(18, 9);
 
 	editor.addContainer( 0, 0, 18, 5);

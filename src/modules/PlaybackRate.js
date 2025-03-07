@@ -1,4 +1,5 @@
-var Module = require('../core/Module');
+import Module from '../core/Module.js';
+import { inherits } from '../core/utils.js';
 
 //▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 function PlaybackRate() {
@@ -40,4 +41,4 @@ PlaybackRate.prototype.descriptor = {
 	controls: { rate: { type: 'knob',  x: 2, y: 1, min: 0.01, max: 2, endPoint: null, value: 'playbackRate' } }
 };
 
-module.exports = PlaybackRate;
+export default PlaybackRate;

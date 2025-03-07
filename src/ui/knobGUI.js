@@ -1,8 +1,7 @@
-var Knob      = require('../core/Knob');
-var constants = require('./constants');
-var createDiv = require('./domUtils').createDiv;
+import Knob from '../core/Knob.js';
+import * as constants from './constants.js';
+import {createDiv} from './domUtils.js';
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.initGUI  = function (module, id, descriptor) {
 	// create dom elements
 	var dom = this._dom = createDiv('knob', module._dom);
@@ -48,12 +47,10 @@ Knob.prototype.initGUI  = function (module, id, descriptor) {
 	});
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.updateGUI = function () {
 	this._mark.style.transform = 'rotate(' + (this.value * 2) + 'deg)';
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Knob.prototype.displayValue = function (value) {
 	// TODO: custom display
 

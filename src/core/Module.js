@@ -1,11 +1,12 @@
-var connectors = require('./connectors');
+import * as connectors from './connectors.js';
+import Knob from './Knob.js';
+import Button from './Button.js';
 
-var CONTROL_BY_TYPE = {
-	knob:   require('./Knob'),
-	button: require('./Button')
+const CONTROL_BY_TYPE = {
+	knob: Knob,
+	button: Button
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Main abstract class for modules. Handle UI display.
  *
  * @author Cedric Stoquer
@@ -34,7 +35,6 @@ function Module() {
 	}
 }
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.descriptor = {
 	// type:     'type',   // Type of the module for serialization. It should be an unique id 
 	// name:     'name',   // How the module appears in the library UI. if null, it won't be registered
@@ -46,8 +46,9 @@ Module.prototype.descriptor = {
 	// tag:        []      // List of tags. Used for filter and search in library
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.createInterface = function () {
+	console.log('createInterface uz runninng');
+	console.log(this.descriptor);
 	if (this.descriptor.inputs) {
 		for (var id in this.descriptor.inputs) {
 			var input = this.descriptor.inputs[id];
@@ -58,8 +59,12 @@ Module.prototype.createInterface = function () {
 
 	if (this.descriptor.outputs) {
 		for (var id in this.descriptor.outputs) {
+			console.log('lolo:');
+			console.log(id);
 			var output = this.descriptor.outputs[id];
+			console.log(output);
 			var ConnectorConstructor = connectors.getConnector('output', output.type);
+			console.log(ConnectorConstructor);
 			if (ConnectorConstructor) this['$' + id] = new ConnectorConstructor(this, id, output);
 		}
 	}
@@ -73,7 +78,6 @@ Module.prototype.createInterface = function () {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.rebind = function () {
 	if (this.descriptor.inputs) {
 		for (var id in this.descriptor.inputs) {
@@ -94,14 +98,12 @@ Module.prototype.rebind = function () {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Set module position in UI surface */
 Module.prototype.setPosition = function (x, y) {
 	this.x = x;
 	this.y = y;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Remove module */
 Module.prototype.remove = function () {
 	// disconnect all connectors
@@ -110,17 +112,14 @@ Module.prototype.remove = function () {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.addCable = function (cable) {
 	this.cables[cable.id] = cable;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.removeCable = function (cable) {
 	delete this.cables[cable.id];
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 /** Get module state for patch saving */
 Module.prototype.getState = function () {
 	var state = {
@@ -156,7 +155,6 @@ Module.prototype.getState = function () {
 	return state;
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.setState = function (state) {
 	// controls
 	if (state.controls) {
@@ -176,7 +174,6 @@ Module.prototype.setState = function (state) {
 	}
 };
 
-//▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 Module.prototype.initGUI      = function () {};
 Module.prototype.select       = function () {};
 Module.prototype.deselect     = function () {};
@@ -185,4 +182,4 @@ Module.prototype.setColor     = function () {};
 Module.prototype.setBorder    = function () {};
 Module.prototype.addClassName = function () {};
 
-module.exports = Module;
+export default Module;
